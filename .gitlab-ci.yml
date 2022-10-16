@@ -28,5 +28,5 @@ push:
 deploy:
   stage: deploy
   script:
-    - aws ecs update-service --cluster ngi-ecs-dev --service webgame --force-new-deployment
+    - AWS_DEFAULT_REGION=us-west-2 aws ecs update-service --cluster ngi-ecs-dev --service webgame --force-new-deployment
   when: manual
