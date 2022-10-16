@@ -28,5 +28,5 @@ push:
 deploy:
   stage: deploy
   script:
-    - echo 'not impl'
+    - aws ecs update-service --cluster ngi-ecs-dev --service webgame --force-new-deployment
   when: manual
