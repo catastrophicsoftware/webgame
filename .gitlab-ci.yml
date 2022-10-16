@@ -1,8 +1,32 @@
 stages:
   - build
+  - push
+  - deploy
+
+
+default:
+  image:
+    name: css-devops:master-amd64
+    entrypoint: [""]
+
 
 
 build:
   stage: build
   script:
     - docker build -t webgame:$CI_COMMIT_BRANCH-amd64 .
+
+
+push:
+  stage: push
+  script:
+    - aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin $REGISTRY
+    - docker tag webgame:$CI_COMMIT_BRANCH-amd64 $REGISTRY/webgame:$CI_COMMIT_BRANCH-amd64
+    - docker push $REGISTRY/webgame:$CI_COMMIT_BRANCH-amd64
+
+
+deploy:
+  stage: deploy
+  script:
+    - echo 'not impl'
+  when: manual
